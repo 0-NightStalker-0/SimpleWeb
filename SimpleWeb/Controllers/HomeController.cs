@@ -16,14 +16,16 @@ namespace SimpleWeb.Controllers
         public static List<Person> InitPeople()
         {
             List<Person> people = new List<Person>();
-            Random rnd = new Random();
+            Random ageRnd = new Random();
+            Random raceRnd = new Random();
 
             for (int i = 0; i < 10000; i++)
             {
                 people.Add(new Person()
                 {
                     Name = "Person #" + i.ToString(),
-                    Age = rnd.Next(1, 99)
+                    Age = ageRnd.Next(1, 99),
+                    Race = (Race)ageRnd.Next(1, 4)
                 });
             }
 
