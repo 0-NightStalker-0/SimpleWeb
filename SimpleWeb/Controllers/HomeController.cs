@@ -31,5 +31,13 @@ namespace SimpleWeb.Controllers
 
             return people;
         }
+
+        public void Add1Year(IEnumerable<Person> persons)
+        {
+            foreach (var person in persons)
+            {
+                person.Age += 1;
+            }
+        }
     }
 }
