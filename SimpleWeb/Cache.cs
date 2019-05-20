@@ -17,7 +17,7 @@ namespace SimpleWeb
             if (people == null)
             {
                 people = PeopleRepository.InitPeople();
-                WebCache.Set(cacheKey, people, 1, false);
+                WebCache.Set(cacheKey, people, 1, true);
             }
 
             return people;

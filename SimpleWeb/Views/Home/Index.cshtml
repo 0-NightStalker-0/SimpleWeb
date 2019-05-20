@@ -3,18 +3,16 @@
 @{
     ViewBag.Title = "Index";
 }
+@using PagedList.Mvc;
+@using PagedList;
 
 <div class="jumbotron">
     <h2>People</h2>
     <p class="lead">Simple MVC application</p>
 </div>
-
 <div class="row">
-    @using (Html.BeginForm("Race", "Home", FormMethod.Post, new { id = "raceForm", name = "raceForm" }))
-    {
-        @Html.Label("Race")
-        @Html.DropDownListFor(m => m.Race, Model.Races, "Select", new { onchange = "SelectedIndexChanged()" })
-    }
+    @Html.Label("Race")
+    @Html.DropDownListFor(m => m.Race, Model.Races, "--Select--", new { @class = "form-control", onchange = "selectedRaceChanged(this);" })
 
     <table class="table">
         <tr>
@@ -23,7 +21,7 @@
             <th>@Html.DisplayName("Height")</th>
         </tr>
 
-        @if (Model.People.Count() == 0)
+        @if (Model.OnePageOfPeople.Count() == 0)
         {
             <tr>
                 <td align="center" colspan="3">Nothing to display</td>
@@ -31,7 +29,7 @@
         }
         else
         {
-            foreach (var item in Model.People)
+            foreach (var item in Model.OnePageOfPeople)
             {
                 <tr>
                     <td>@item.Name</td>
@@ -41,10 +39,13 @@
             }
         }
     </table>
+
+    @Html.PagedListPager((IPagedList)Model.OnePageOfPeople, page => Url.Action("Index", new { Model.Race, page }))
 </div>
 
 <script type="text/javascript">
-    function SelectedIndexChanged() {
-        document.raceForm.submit();
+    function selectedRaceChanged(source) {
+        var selectedValue = source.value;
+        window.location.href = "/Home/Index?race=" + selectedValue +"&page=1";
     }
 </script>
