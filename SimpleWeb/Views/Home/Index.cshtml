@@ -1,6 +1,50 @@
-﻿
+﻿@model SimpleWeb.Models.MainViewModel
+
 @{
     ViewBag.Title = "Index";
 }
 
-<h2>People</h2>
+<div class="jumbotron">
+    <h2>People</h2>
+    <p class="lead">Simple MVC application</p>
+</div>
+
+<div class="row">
+    @using (Html.BeginForm("Race", "Home", FormMethod.Post, new { id = "raceForm", name = "raceForm" }))
+    {
+        @Html.Label("Race")
+        @Html.DropDownListFor(m => m.Race, Model.Races, "Select", new { onchange = "SelectedIndexChanged()" })
+    }
+
+    <table class="table">
+        <tr>
+            <th>@Html.DisplayName("Name")</th>
+            <th>@Html.DisplayName("Age")</th>
+            <th>@Html.DisplayName("Height")</th>
+        </tr>
+
+        @if (Model.People.Count() == 0)
+        {
+            <tr>
+                <td align="center" colspan="3">Nothing to display</td>
+            </tr>
+        }
+        else
+        {
+            foreach (var item in Model.People)
+            {
+                <tr>
+                    <td>@item.Name</td>
+                    <td>@item.Age</td>
+                    <td>@SimpleWeb.Data.PersonExtensions.Height(item)</td>
+                </tr>
+            }
+        }
+    </table>
+</div>
+
+<script type="text/javascript">
+    function SelectedIndexChanged() {
+        document.raceForm.submit();
+    }
+</script>

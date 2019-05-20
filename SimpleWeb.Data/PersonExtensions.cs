@@ -1,4 +1,7 @@
-﻿namespace SimpleWeb.Models
+﻿
+using SimpleWeb.Entities;
+
+namespace SimpleWeb.Data
 {
     public static class PersonExtensions
     {

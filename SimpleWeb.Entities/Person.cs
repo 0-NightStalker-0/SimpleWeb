@@ -1,5 +1,4 @@
-﻿
-namespace SimpleWeb.Models
+﻿namespace SimpleWeb.Entities
 {
     public class Person
     {

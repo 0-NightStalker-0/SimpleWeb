@@ -1,6 +1,11 @@
-﻿using System;
+﻿
 using System.Collections.Generic;
+using System.Linq;
+using System.Web.Helpers;
 using System.Web.Mvc;
+
+using SimpleWeb.Data;
+using SimpleWeb.Entities;
 
 namespace SimpleWeb.Controllers
 {
@@ -10,34 +15,31 @@ namespace SimpleWeb.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            var model = new MainViewModel();
+            return View(model);
         }
 
-        public static List<Person> InitPeople()
+        [HttpPost]
+        public ActionResult Race(MainViewModel model)
         {
-            List<Person> people = new List<Person>();
-            Random ageRnd = new Random();
-            Random raceRnd = new Random();
+            var data = GetCachedData();
+            var people = data.Where(x => x.Race == model.Race && x.Age % 2 == 0).OrderBy(x => x.Age).ToList();
+            model.People = people;
+            return View("Index", model);
+        }
 
-            for (int i = 0; i < 10000; i++)
+        private List<Person> GetCachedData()
+        {
+            var cacheKey = "CachedPeople";
+            List<Person> people = WebCache.Get(cacheKey);
+
+            if (people == null)
             {
-                people.Add(new Person()
-                {
-                    Name = "Person #" + i.ToString(),
-                    Age = ageRnd.Next(1, 99),
-                    Race = (Race)ageRnd.Next(1, 4)
-                });
+                people = PeopleRepository.InitPeople();
+                WebCache.Set(cacheKey, people, 1, false);
             }
 
             return people;
-        }
-
-        public void Add1Year(IEnumerable<Person> persons)
-        {
-            foreach (var person in persons)
-            {
-                person.Age += 1;
-            }
         }
     }
 }

@@ -123,9 +123,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Person.cs" />
-    <Compile Include="Models\PersonExtensions.cs" />
-    <Compile Include="Models\Race.cs" />
+    <Compile Include="Models\MainViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -147,6 +145,16 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SimpleWeb.Data\SimpleWeb.Data.csproj">
+      <Project>{2a094a5c-0da4-41e9-84de-cc874932ca13}</Project>
+      <Name>SimpleWeb.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SimpleWeb.Entities\SimpleWeb.Entities.csproj">
+      <Project>{45bfd336-1804-4c05-b8fe-7ba5d67ba967}</Project>
+      <Name>SimpleWeb.Entities</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
